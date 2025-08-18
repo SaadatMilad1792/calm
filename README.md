@@ -8,12 +8,12 @@ Overall, this tutorial is designed to be a practical, hands-on learning journey.
 ## Table of Contents
 Here is the table of contents for this tutorial. You can jump directly to the topic of your choice, or use the navigation panel at the bottom of the document to move step by step through the tutorial.
 
-|     | Topic                    | Description |
-|-----|--------------------------|-------------|
-| 1   | Introduction             |             |
-| 2   | Tools                    |             |
-| 3   | Byte-Pair Encoding (BPE) |             |
-| 4   | TBD                      |             |
+|     | Topic                                                                | Description                         |
+|-----|----------------------------------------------------------------------|-------------------------------------|
+| 1   | Introduction                                                         |                                     |
+| 2   | Tools                                                                |                                     |
+| 3   | [Byte-Pair Encoding (BPE)](/documentation/markdowns/tokenization.md) | Introduction to Byte-Pair Encoding. |
+| 4   | TBD                                                                  |                                     |
 
 ## Navigation Panel
-TBD later
+[Proceed to the next section: Byte-Pair Encoding (BPE)](/documentation/markdowns/tokenization.md)<br>
