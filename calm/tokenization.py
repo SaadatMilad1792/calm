@@ -3,6 +3,7 @@
 ########################################################################################################################
 import os
 import pickle
+from tqdm import tqdm
 
 ########################################################################################################################
 ## -- tokenizer training, encoder, and decoder -- ######################################################################
@@ -50,7 +51,7 @@ class Tokenizer():
     self.vocab = {index:bytes([index]) for index in range(self.base_vocab_size)}
     self.new_merged_indexes = {}
 
-    for i in range(self.base_vocab_size, self.max_vocab_size):
+    for i in tqdm(range(self.base_vocab_size, self.max_vocab_size), desc="Merging BPE pairs"):
       most_common_pair = self.get_most_common_pair(base_counts)
       base_tokens = self.merge_to_new_index(base_tokens, most_common_pair, i)
       self.new_merged_indexes[most_common_pair] = i

@@ -141,6 +141,5 @@ class Tokenizer():
 An entire notebook is dedicated to run and test the tokenizer module we just designed, you may find it usefull. Click [here](/development/tokenization_test.ipynb) to check out that notebook.
 
 ## Navigation Panel
-Proceed to the next section: Positional Encoding<br>
-Return to the previous section: Introduction<br>
+[Proceed to the next section: Data Handler](/documentation/markdowns/data_handler.md)<br>
 [Back to the table of contents](/)<br>
