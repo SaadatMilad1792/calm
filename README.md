@@ -18,8 +18,17 @@ Here is the table of contents for this tutorial. You can jump directly to the to
 | 6   | [Transformer Decoder](/documentation/markdowns/transformer_decoder.md)         | Transformer Decoder for language tasks.       |
 | 7   | [Training and Wrapup](/documentation/markdowns/training_and_wrapup.md)         | Training the model and creating a simple UI.  |
 
-## Acknowledgment
-TBW
+## Acknowledgments
+
+In the preparation of this project, the following resources were used:
+
+- [DailyDialog Dataset](http://yanran.li/dailydialog) — a high-quality multi-turn dialog dataset used as the training corpus.
+
+- [Video by Andrej Karpathy](https://www.youtube.com/watch?v=zduSFxRajkE&t=7271s) and [minBPE repository](https://github.com/karpathy/minbpe) — excellent resources for understanding and implementing Byte-Pair Encoding (BPE).
+
+- [Video by Andrej Karpathy](https://www.youtube.com/watch?v=kCc8FmEb1nY) and [ng-video-lecture repository](https://github.com/karpathy/ng-video-lecture) — a practical walkthrough of building a language model. The original uses character-level tokenization, which I replaced with BPE.
+
+- [Transformer-Neural-Network repository](https://github.com/ajhalthor/Transformer-Neural-Network) — the decoder architecture in this project is based on this work, with modifications to apply the pre-norm approach (LayerNorm before multi-head attention and feed-forward layers).
 
 ## Navigation Panel
 [Proceed to the next section: Byte-Pair Encoding (BPE)](/documentation/markdowns/tokenization.md)<br>

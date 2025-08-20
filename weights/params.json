@@ -3,12 +3,12 @@
   "val_iter": 1,
   "val_freq": 200,
   "save_path": "./weights/",
-  "num_heads": 8, 
-  "model_embd": 512, 
-  "vocab_size": 1024, 
-  "batch_size": 512,
+  "num_heads": 16,
+  "model_embd": 256,
+  "vocab_size": 1024,
+  "batch_size": 256,
   "block_size": 256,
-  "hidden": 2048,
+  "hidden": 1024,
   "dropout_p": 0.1,
-  "num_layers": 4
+  "num_layers": 6
 }

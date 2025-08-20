@@ -73,7 +73,7 @@ def main(page: ft.Page):
 
     sentence = "<speaker1>" + user_text
     X = torch.tensor([tokenizer.encoder(sentence)])
-    response = tokenizer.decoder(model.generate(X, 256).tolist()[0])
+    response = tokenizer.decoder(model.generate(X, 64).tolist()[0])
 
     # Remove the initial user input prefix if present
     if response.startswith(sentence):
@@ -81,7 +81,7 @@ def main(page: ft.Page):
 
     # Only show text before next <speaker1> if present
     if "<speaker1>" in response:
-      response = response.split("<speaker1>")[0]
+      response = response.split("<speaker1>")[1]
 
     # Remove all <speaker2> tokens
     response = response.replace("<speaker2>", "")
