@@ -9,8 +9,9 @@ import torch.nn as nn
 ## -- multi-headed attention mechanism -- ##############################################################################
 ########################################################################################################################
 class MultiHeadedAttention(nn.Module):
-  def __init__(self, model_emb, num_heads, dropout_p = 0.0):
+  def __init__(self, model_emb, num_heads, dropout_p = 0.0, device = 'cpu'):
     super(MultiHeadedAttention, self).__init__()
+    self.device = device
     self.num_heads = num_heads
     self.model_emb = model_emb
     self.dropout_1 = nn.Dropout(p = dropout_p)
@@ -22,7 +23,7 @@ class MultiHeadedAttention(nn.Module):
   def scaled_attention(self, q, k, v, mask = None):
     att_mat = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(q.shape[-1])
     att_mat = self.dropout_1(att_mat)
-    att_mat = nn.functional.softmax(att_mat + mask.unsqueeze(1) if mask is not None else att_mat, dim = -1)
+    att_mat = torch.softmax(att_mat + mask.to(self.device).unsqueeze(1) if mask is not None else att_mat, dim = -1)
     return torch.matmul(att_mat, v), att_mat
 
   def causal_mask(self, batch_size, block_size):
@@ -79,9 +80,9 @@ class DecoderSequential(nn.Sequential):
     return x
 
 class DecoderBlock(nn.Module):
-  def __init__(self, model_emb, num_heads, hidden, dropout_p):
+  def __init__(self, model_emb, num_heads, hidden, dropout_p, device):
     super(DecoderBlock, self).__init__()
-    self.multi_head_att = MultiHeadedAttention(model_emb, num_heads, dropout_p)
+    self.multi_head_att = MultiHeadedAttention(model_emb, num_heads, dropout_p, device)
     self.feed_forward = FeedForward(model_emb, hidden, dropout_p)
     self.dropout_1 = nn.Dropout(p = dropout_p)
     self.dropout_2 = nn.Dropout(p = dropout_p)
@@ -104,9 +105,9 @@ class DecoderBlock(nn.Module):
     return x
 
 class TransformerDecoder(nn.Module):
-  def __init__(self, model_emb, num_heads, hidden, dropout_p, num_layers):
+  def __init__(self, model_emb, num_heads, hidden, dropout_p, num_layers, device):
     super(TransformerDecoder, self).__init__()
-    self.decoder = DecoderSequential(*[DecoderBlock(model_emb, num_heads, hidden, dropout_p) 
+    self.decoder = DecoderSequential(*[DecoderBlock(model_emb, num_heads, hidden, dropout_p, device) 
                                        for _ in range(num_layers)])
 
   def forward(self, x, mask = None):

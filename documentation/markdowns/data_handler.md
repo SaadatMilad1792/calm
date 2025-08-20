@@ -39,6 +39,7 @@ class DataHandler():
 ```
 
 ## Navigation Panel
-Proceed to the next section: Positional Encoding<br>
+Use this navigation panel to move forward or backward through the tutorial, or jump straight to the homepage whenever you like.<br>
+[Proceed to the next section: Compact Ai Language Model (CALM)](/documentation/markdowns/language_model.md)<br>
 [Return to the previous section: Byte-Pair Encoding (BPE)](/documentation/markdowns/tokenization.md)<br>
 [Back to the table of contents](/)<br>

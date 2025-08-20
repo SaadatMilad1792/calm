@@ -2,6 +2,7 @@
 ## -- libraries and packages -- ########################################################################################
 ########################################################################################################################
 import os
+import json
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -13,6 +14,8 @@ from .transformer_decoder import TransformerDecoder
 class CompactAiLanguageModel(nn.Module):
   def __init__(self, parameters):
     super(CompactAiLanguageModel, self).__init__()
+    self.params = parameters
+    self.device = parameters["device"]
     self.val_iter = parameters["val_iter"]
     self.val_freq = parameters["val_freq"]
     self.save_path = parameters["save_path"]
@@ -25,10 +28,11 @@ class CompactAiLanguageModel(nn.Module):
     self.dropout_p = parameters["dropout_p"]
     self.num_layers = parameters["num_layers"]
 
+    self = self.to(self.device)
     self.enc_embeddings = nn.Embedding(self.vocab_size, self.model_embd)
     self.enc_pos_encoding = nn.Embedding(self.block_size, self.model_embd)
     self.decoder = TransformerDecoder(self.model_embd, self.num_heads, self.hidden, 
-                                      self.dropout_p, self.num_layers)
+                                      self.dropout_p, self.num_layers, self.device)
 
     self.vocab_from_emb = nn.Linear(self.model_embd, self.vocab_size)
 
@@ -80,17 +84,19 @@ class CompactAiLanguageModel(nn.Module):
   def save_weights(self, path):
     os.makedirs(os.path.dirname(path), exist_ok = True)
     torch.save(self.state_dict(), path + "weights.pth")
+    with open(path + "params.json", "w") as file:
+      json.dump(self.params, file, indent = 2)
     return
 
-  def load_weights(self, path):
-    state_dict = torch.load(path)
+  def load_weights(self, path, device = 'cpu'):
+    state_dict = torch.load(path, map_location = torch.device(device))
     self.load_state_dict(state_dict)
     return
 
   def forward(self, X, y = None):
     B, T = X.shape
     embeddings = self.enc_embeddings(X)
-    positional_encoding = self.enc_pos_encoding(torch.arange(T))
+    positional_encoding = self.enc_pos_encoding(torch.arange(T).to(self.device))
     x = embeddings + positional_encoding
     x = self.decoder(x, mask = "auto")
     logits = self.vocab_from_emb(x)
